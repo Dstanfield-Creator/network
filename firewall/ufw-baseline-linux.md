@@ -138,7 +138,7 @@ Review recent blocks with `sudo journalctl -k --since "10 min ago" | grep 'UFW B
 ## Related
 
 - [OpenSSH server hardening](https://github.com/Dstanfield-Creator/server-administration/blob/master/hardening/openssh-server-hardening.md)
-- [Prometheus node_exporter setup](https://github.com/Dstanfield-Creator/monitoring/blob/main/docs/prometheus-node-exporter-setup.md)
+- [Prometheus node_exporter setup](https://github.com/Dstanfield-Creator/cyber-resources/blob/master/monitoring/docs/prometheus-node-exporter-setup.md)
 
 ---
 
