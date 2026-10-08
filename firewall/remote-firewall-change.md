@@ -49,7 +49,7 @@ sudo systemd-run --unit=fw-deadman --on-active=180 \
 ```
 
 A helper script that wraps arm, test and disarm is at
-https://github.com/Dstanfield-Creator/projects/tree/master/tools/firewall-deadman-switch
+https://github.com/Dstanfield-Creator/network/tree/main/firewall/firewall-deadman-switch
 
 ### 2. Stage the rules while the firewall is still off
 
