@@ -1,0 +1,41 @@
+#!/bin/bash
+# fw-deadman — arm a timed rollback BEFORE changing a remote host's firewall.
+#
+#   sudo fw-deadman arm [SECONDS] [-- ROLLBACK_CMD ...]   # default 180s, default rollback: ufw disable
+#   sudo fw-deadman disarm                                # only after a FRESH ssh session succeeds
+#        fw-deadman status
+#
+# If the firewall change locks you out, the rollback runs automatically when the
+# timer expires and access comes back. If a new SSH session works, disarm it.
+set -euo pipefail
+
+UNIT="fw-deadman"
+cmd="${1:-status}"; [[ $# -gt 0 ]] && shift
+
+case "$cmd" in
+  arm)
+    secs=180
+    if [[ "${1:-}" =~ ^[0-9]+$ ]]; then secs="$1"; shift; fi
+    [[ "${1:-}" == "--" ]] && shift
+    if (( $# )); then rollback=("$@"); else rollback=(/usr/sbin/ufw disable); fi
+    if systemctl is-active --quiet "${UNIT}.timer"; then
+        echo "already armed — run 'fw-deadman disarm' first" >&2; exit 1
+    fi
+    systemd-run --quiet --unit="$UNIT" --on-active="$secs" \
+        --description="firewall dead-man switch" "${rollback[@]}"
+    echo "armed: '${rollback[*]}' runs in ${secs}s unless disarmed"
+    echo "now make the firewall change, open a NEW ssh session, then: sudo fw-deadman disarm"
+    ;;
+  disarm)
+    if systemctl is-active --quiet "${UNIT}.timer"; then
+        systemctl stop "${UNIT}.timer"; echo "disarmed"
+    else
+        echo "not armed (or the rollback already fired — check your firewall state)" >&2; exit 1
+    fi
+    ;;
+  status)
+    systemctl list-timers --all --no-pager "${UNIT}.timer"
+    ;;
+  *)
+    sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//'; exit 2 ;;
+esac
