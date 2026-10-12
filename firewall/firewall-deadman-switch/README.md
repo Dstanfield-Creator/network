@@ -57,7 +57,6 @@ Install: `sudo install -m 755 fw-deadman /usr/local/sbin/`
 
 ## Related
 
-- [Paperclip AI Agents](https://github.com/Dstanfield-Creator/ai-automation/tree/main/paperclip-ai-agents/) — the VM where this was learned the hard way
 - [Tailscale Remote Access](../../remote-access/tailscale-remote-access/) — the access path this protects
 
 ---

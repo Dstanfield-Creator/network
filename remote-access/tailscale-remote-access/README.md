@@ -20,7 +20,6 @@ flowchart LR
     D["Windows desktop"]
     A["Attack VM"]
     M["Minecraft host"]
-    P["Paperclip VM"]
     L["Laptops / phone"]
   end
   TN --> DNS["MagicDNS<br/>host.example.ts.net"]
@@ -54,9 +53,6 @@ Host pve
 Host docker-host
     HostName 192.0.2.20
     User admin
-Host paperclip
-    HostName 192.0.2.30
-    User admin
 ```
 
 ## Access policy
@@ -67,7 +63,6 @@ Host paperclip
 | Internet → anything | no | no port-forwards exist |
 | Tailnet → Proxmox UI :8006 | yes, via a tailnet host | SSH tunnel or Tailscale subnet route |
 | Tailnet → Minecraft :25565 | tailnet members | Tailscale, no port-forward |
-| LAN → Paperclip :3100 | no (plain HTTP rejected) | SSH tunnel `-L 3100:localhost:3100` |
 
 ## Verification
 
@@ -86,7 +81,7 @@ Zero-trust network access · WireGuard / Tailscale · SSH hardening and configur
 
 ## Related
 
-- [lab-ssh-check](https://github.com/Dstanfield-Creator/lab-ops/tree/main/scripts/lab-ssh-check/) · [Proxmox Lab Platform](https://github.com/Dstanfield-Creator/lab-ops/tree/main/docs/proxmox-lab-platform/) · [Minecraft Server](https://github.com/Dstanfield-Creator/lab-ops/tree/main/docs/minecraft-server/) · [Paperclip AI Agents](https://github.com/Dstanfield-Creator/ai-automation/tree/main/paperclip-ai-agents/)
+- [lab-ssh-check](https://github.com/Dstanfield-Creator/lab-ops/tree/main/scripts/lab-ssh-check/) · [Proxmox Lab Platform](https://github.com/Dstanfield-Creator/lab-ops/tree/main/docs/proxmox-lab-platform/) · [Minecraft Server](https://github.com/Dstanfield-Creator/lab-ops/tree/main/docs/minecraft-server/)
 
 ---
 
